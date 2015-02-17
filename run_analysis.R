@@ -17,7 +17,7 @@ runAll <- function() {
   # Create a factor with the activity labels
   al <- read.table(file.path(udir, "activity_labels.txt"),
                    colClasses=c("integer", "character"))
-  act_lab <- factor(al$V1, al$V2)
+  act_lab <- factor(al$V1, labels=al$V2)
 
   # Get the feature labels
   feat_lab <- read.table(file.path(udir, "features.txt"),
@@ -27,9 +27,13 @@ runAll <- function() {
                       colClasses="numeric", comment.char="",
                       col.names=feat_lab)
   ytest <- read.table(file.path(udir, "test", "y_test.txt"),
-                      colClasses="factor")
+                      colClasses="factor", col.names="activity")
+  activity <- factor(ytest[,], labels=act_lab)
   stest <- read.table(file.path(udir, "test", "subject_test.txt"),
-                      colClasses="factor")
+                      colClasses="factor", col.names="subject")
+
+  # For testing
+  cbind(activity, stest, xtest)
 }
 
-runAll()
+l <- runAll()
