@@ -10,6 +10,9 @@ getUCIHARData <- function() {
     "UCI HAR Dataset"
 }
 
+
+
+
 # Run everything
 runAll <- function() {
   udir <- getUCIHARData()
@@ -22,18 +25,32 @@ runAll <- function() {
   # Get the feature labels
   feat_lab <- read.table(file.path(udir, "features.txt"),
                          colClasses=c("NULL", "character"))$V2
-
-  xtest <- read.table(file.path(udir, "test", "X_test.txt"),
-                      colClasses="numeric", comment.char="",
-                      col.names=feat_lab)
-  ytest <- read.table(file.path(udir, "test", "y_test.txt"),
+  # Filter feat_lab so we retain only the ones containing 
+  # mean() or std()
+  fms <- grepl("mean()", feat_lab[,]) | 
+    grepl("std()", feat_lab[,])
+  #feat_lab <- sapply(feat_lab, function(lab) {})
+  
+  # Read test/train datasets
+  readUHDataset <- function(kind) {
+     x <- read.table(file.path(udir, kind, 
+                               paste("X_", kind, ".txt", sep="")),
+                     colClasses="numeric", comment.char="",
+                     col.names=feat_lab)
+     y <- read.table(file.path(udir, kind, 
+                               paste("y_", kind, ".txt", sep="")),
                       colClasses="factor", col.names="activity")
-  activity <- factor(ytest[,], labels=act_lab)
-  stest <- read.table(file.path(udir, "test", "subject_test.txt"),
-                      colClasses="factor", col.names="subject")
+     activity <- factor(y[,], labels=act_lab)
+     s <- read.table(file.path(udir, kind, 
+                               paste("subject_", kind, ".txt", sep="")),
+                     colClasses="factor", col.names="subject")
+     cbind(activity, s, x)
+  }
 
-  # For testing
-  cbind(activity, stest, xtest)
+  test <- readUHDataset("test")
+  #train <- readUHDataset("train")
+  #rbind(test, train)
+  test
 }
 
 l <- runAll()
