@@ -58,7 +58,7 @@ tidyUCIHAR <- function() {
 }
 
 # Create a dataset with per-subject and per-activity means
-tidysmean <- function(d) {
+tidymeans <- function(d) {
     n <- colnames(d)
     l <- split(d, list(d$subject, d$activity))
     l2 <- lapply(l, function(x) {
@@ -72,5 +72,5 @@ tidysmean <- function(d) {
 }
 
 d <- tidyUCIHAR()
-tm <- tidysmean(d)
+tm <- tidymeans(d)
 write.table(tm, "tidymeans.txt", row.names=FALSE)
