@@ -20,7 +20,7 @@ train/subject_train.txt in the raw data set.
 3:68) Numerical data describing the mean and standard deviations of
 the measured data. Read from the test/X_test.txt and train/X_train.txt
 files in the raw data set. Note that the meanFreq() variables in the
-raw data set are not included.'
+raw data set are not included.
 
 The function tidysmean() takes a data frame as created by tidyUCIHAR()
 and calculates mean values on a per-subject and per-activity basis. As
