@@ -18,7 +18,8 @@ observation in question. Read from test/subject_test.txt and
 train/subject_train.txt in the raw data set.
 
 3:68) Numerical data describing the mean and standard deviations of
-the measured data. Read from the test/X_test.txt and train/X_train.txt
+the measured data, the measured data being normalized to lie in the
+interval [-1,1]. Read from the test/X_test.txt and train/X_train.txt
 files in the raw data set. Note that the meanFreq() variables in the
 raw data set are not included.
 
